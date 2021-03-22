@@ -1,4 +1,4 @@
-# client-form
+# Client form
 
 ## Project setup
 ```
