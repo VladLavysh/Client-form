@@ -1,7 +1,7 @@
 <template>
-  <div class="basic-info">
-    <div class="basic-info__header"><span>Основное</span></div>
-    <div class="basic-info__main">
+  <div class="client-info">
+    <div class="client-info__header"><span>Основное</span></div>
+    <div class="client-info__main">
       <div
         class="input-field"
         v-for="(field, idx) of inputFields"
@@ -103,93 +103,6 @@ export default {
       doctor: "",
       mailing: false
     }
-  }),
-
-  methods: {}
+  })
 };
 </script>
-
-<style lang="scss">
-.basic-info {
-  width: 280px;
-
-  &__header {
-    height: 35px;
-    box-sizing: border-box;
-
-    line-height: 35px;
-    font-size: 1.2rem;
-    background-color: #e28e48;
-    color: #fff;
-  }
-
-  &__main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 15px 15px 10px;
-    box-sizing: border-box;
-    background-color: #4693d3;
-  }
-}
-
-.input-field {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 100%;
-  margin-bottom: 15px;
-
-  .required-field {
-    &::after {
-      content: "*";
-      display: block;
-      color: rgb(221, 142, 142);
-      transform: translate(5px, 2px);
-    }
-  }
-
-  label {
-    display: flex;
-    color: #fff;
-    margin-bottom: 5px;
-  }
-
-  select {
-    width: 100%;
-    padding: 5px;
-
-    border: none;
-    border-radius: 5px;
-    overflow-y: auto;
-    outline: none;
-  }
-
-  input {
-    height: 25px;
-    width: 100%;
-    border: none;
-    border-radius: 5px;
-    outline: none;
-    padding-left: 7px;
-    box-sizing: border-box;
-
-    &::placeholder {
-      color: #aaa2a2;
-    }
-  }
-}
-
-.field-checkbox {
-  flex-direction: row;
-  justify-content: left;
-  align-items: center;
-
-  input {
-    width: auto;
-    margin: 0 0 4px 20px;
-  }
-}
-</style>

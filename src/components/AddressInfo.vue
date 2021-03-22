@@ -1,7 +1,7 @@
 <template>
-  <div class="basic-info">
-    <div class="basic-info__header"><span>Адрес</span></div>
-    <div class="basic-info__main">
+  <div class="client-info">
+    <div class="client-info__header"><span>Адрес</span></div>
+    <div class="client-info__main">
       <div
         class="input-field"
         v-for="(field, idx) of inputFields"
@@ -75,5 +75,3 @@ export default {
   })
 };
 </script>
-
-<style scoped></style>
