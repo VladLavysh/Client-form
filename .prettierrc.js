@@ -3,5 +3,5 @@ module.exports = {
   "useTabs": false,
   "trailingComma": "none",
   "printWidth": 80,
-  "arrowParens": "avoid"
+  "arrowParens": "avoid",
 }
