@@ -1,10 +1,10 @@
 <template>
   <div class="client-info">
-    <div class="client-info__header"><span>Паспорт</span></div>
+    <div class="client-info__header"><span>Удостоверение личности</span></div>
     <div class="client-info__main">
       <div class="input-field">
-        <label for="doctors" class="required-field">Тип документа</label>
-        <select id="cars" v-model="clientData.docType">
+        <label for="docType" class="required-field">Тип документа</label>
+        <select id="docType" v-model="clientPassportData.docType">
           <option value="Паспорт">Паспорт</option>
           <option value="Свидетельство о рождении">
             Свидетельство о рождении
@@ -24,8 +24,8 @@
         <input
           :id="field.id"
           :type="field.type"
-          v-model="clientData[inputFields[idx].id]"
           :placeholder="field.placeholder"
+          v-model.trim="clientPassportData[inputFields[idx].id]"
         />
       </div>
     </div>
@@ -34,6 +34,10 @@
 
 <script>
 export default {
+  props: {
+    clientPassportData: Object
+  },
+
   data: () => ({
     inputFields: [
       {
@@ -64,15 +68,7 @@ export default {
         placeholder: "пр. 28.06.2018",
         required: true
       }
-    ],
-
-    clientData: {
-      series: "",
-      number: "",
-      issuedBy: "",
-      dateOf: "",
-      docType: ""
-    }
+    ]
   })
 };
 </script>

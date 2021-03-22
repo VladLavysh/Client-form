@@ -1,15 +1,31 @@
 <template>
   <div id="app">
-    <form class="client-form" @submit.prevent="createClient">
-      <main-info />
-      <address-info />
-      <passport-info />
+    <form class="client-form" @submit.prevent="createClient" @reset="clearForm">
+      <main-info :clientMainData="clientMainData" />
+      <address-info :clientAddressData="clientAddressData" />
+      <passport-info :clientPassportData="clientPassportData" />
 
       <div class="info-btn-container">
         <span class="client-form__field-info">
           <span>*</span> - поле обязательное для заполнения
         </span>
+        <button class="client-form__submit-btn" type="reset">Очистить</button>
         <button class="client-form__submit-btn" type="submit">Создать</button>
+      </div>
+
+      <div v-if="showWarn" class="client-form__warn-message">
+        <span>
+          Введены некорректные данные.<br />
+          Проверьте еще раз:
+        </span>
+        <ul>
+          <li>- обязательные поля должны быть заполнены</li>
+          <li>- все данные должны быть введены корректно</li>
+          <li>- номер телефона должен начинаться с 7</li>
+        </ul>
+      </div>
+      <div v-if="showSuccess" class="client-form__success-message">
+        <span>Клиент успешно создан</span>
       </div>
     </form>
   </div>
@@ -19,6 +35,7 @@
 import MainInfo from "./components/MainInfo.vue";
 import AddressInfo from "./components/AddressInfo.vue";
 import PassportInfo from "./components/PassportInfo.vue";
+import { required, numeric, maxLength } from "vuelidate/lib/validators";
 
 export default {
   name: "app",
@@ -28,8 +45,95 @@ export default {
     PassportInfo
   },
 
+  data: () => ({
+    clientMainData: {
+      lastName: "",
+      firstName: "",
+      midName: "",
+      bornDate: "",
+      phoneNumber: "",
+      gender: "",
+      clientGroup: [],
+      doctor: "",
+      mailing: false
+    },
+    clientAddressData: {
+      index: "",
+      country: "",
+      region: "",
+      city: "",
+      street: "",
+      house: ""
+    },
+    clientPassportData: {
+      docType: "",
+      series: "",
+      number: "",
+      issuedBy: "",
+      dateOf: ""
+    },
+
+    showWarn: false,
+    showSuccess: false
+  }),
+
+  validations: {
+    clientMainData: {
+      lastName: { required },
+      firstName: { required },
+      bornDate: { required },
+      phoneNumber: { required, numeric, maxLength: maxLength(11) },
+      clientGroup: { required }
+    },
+    clientAddressData: {
+      city: { required }
+    },
+    clientPassportData: {
+      docType: { required },
+      dateOf: { required }
+    }
+  },
+
+  computed: {
+    allClientData() {
+      return Object.assign(
+        this.clientMainData,
+        this.clientAddressData,
+        this.clientPassportData
+      );
+    }
+  },
+
   methods: {
-    createClient() {}
+    createClient() {
+      if (
+        this.$v.$invalid ||
+        !this.clientMainData.phoneNumber.startsWith("7")
+      ) {
+        this.$v.$touch();
+        this.showWarn = true;
+        return;
+      }
+
+      this.showWarn = false;
+      this.showSuccess = true;
+
+      setTimeout(() => {
+        this.showSuccess = false;
+      }, 3000);
+
+      // Данные клиента
+      console.log(this.allClientData);
+    },
+
+    clearForm() {
+      console.log("clear");
+      for (const key in this.allClientData) {
+        if (key === "clientGroup") this.allClientData[key] = [];
+        else if (key === "mailing") this.allClientData[key] = false;
+        else this.allClientData[key] = "";
+      }
+    }
   }
 };
 </script>
@@ -153,7 +257,7 @@ export default {
     position: absolute;
     right: 20px;
     bottom: 20px;
-    width: 55%;
+    width: 64%;
 
     display: flex;
     justify-content: space-between;
@@ -162,6 +266,8 @@ export default {
     @media (max-width: 960px) {
       position: static;
       width: 100%;
+      height: 130px;
+      flex-direction: column;
     }
   }
 
@@ -194,6 +300,26 @@ export default {
     span {
       color: #dd8e8e;
     }
+  }
+
+  &__warn-message {
+    position: absolute;
+    bottom: 72px;
+    right: 20px;
+
+    padding: 15px;
+    text-align: left;
+    background-color: red;
+    color: #fff;
+  }
+
+  &__success-message {
+    position: absolute;
+    bottom: 110px;
+    right: 20px;
+    padding: 10px;
+    background-color: #48a24f;
+    color: #fff;
   }
 }
 </style>

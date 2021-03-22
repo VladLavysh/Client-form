@@ -1,6 +1,6 @@
 <template>
   <div class="client-info">
-    <div class="client-info__header"><span>Адрес</span></div>
+    <div class="client-info__header"><span>Адрес проживания</span></div>
     <div class="client-info__main">
       <div
         class="input-field"
@@ -13,8 +13,8 @@
         <input
           :id="field.id"
           :type="field.type"
-          v-model="clientData[inputFields[idx].id]"
           :placeholder="field.placeholder"
+          v-model.trim="clientAddressData[inputFields[idx].id]"
         />
       </div>
     </div>
@@ -23,6 +23,10 @@
 
 <script>
 export default {
+  props: {
+    clientAddressData: Object
+  },
+
   data: () => ({
     inputFields: [
       {
@@ -44,7 +48,7 @@ export default {
         required: false
       },
       {
-        id: "town",
+        id: "city",
         value: "Город",
         placeholder: "пр. Минск",
         required: true
@@ -61,17 +65,7 @@ export default {
         placeholder: "пр. 13/Б",
         required: false
       }
-    ],
-
-    clientData: {
-      address: "",
-      index: "",
-      country: "",
-      region: "",
-      town: "",
-      street: "",
-      house: ""
-    }
+    ]
   })
 };
 </script>
