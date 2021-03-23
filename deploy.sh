@@ -1,16 +1,12 @@
 #!/usr/bin/env sh
-
-# остановить публикацию при ошибках
+# abort on errors
 set -e
-
-# сборка
-npm run build
-
-# переход в каталог сборки
+# build
+yarn run build
+# navigate into the build output directory
 cd dist
-
 git init
 git add -A
 git commit -m 'deploy'
-
 git push -f git@github.com:VladLavysh/Client-form.git master:gh-pages
+cd -
