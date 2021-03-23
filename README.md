@@ -1,9 +1,8 @@
 # Client form
 
-# Live server
-```
+## Live server
 https://vladlavysh.github.io/Client-form/
-```
+
 
 ## Project setup
 ```
